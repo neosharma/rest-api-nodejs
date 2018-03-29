@@ -1,0 +1,128 @@
+Status: 200
+Payload: {
+  "Resources" : {
+    "leads" : {
+      "discrColumnType" : false,
+      "title" : "Sales Lead",
+      "titlePlural" : "Sales Leads",
+      "attributes" : [ {
+        "name" : "Name",
+        "type" : "string",
+        "updatable" : true,
+        "mandatory" : true,
+        "queryable" : true,
+        "allowChanges" : "always",
+        "precision" : 250,
+        "title" : "Name",
+        "maxLength" : "250",
+        "properties" : {
+          "ExtnMassUpdateable" : "false",
+          "fnd:OSN_ENABLED_ATTR" : "true",
+          "ExtnEventActionProperty" : "UpdateInFieldUpdate",
+          "FIELDORDER" : "0.0",
+          "DISPLAYWIDTH" : "35",
+          "fnd:OSN_USER_KEY" : "true",
+          "fnd:FND_AUDIT_ATTR_ENABLED" : "true"
+        },
+        "annotations" : {
+          "description" : "Lead Name used for identifying the lead."
+        }
+      }, {
+        "name" : "LeadNumber",
+        "type" : "string",
+        "updatable" : true,
+        "mandatory" : false,
+        "queryable" : true,
+        "allowChanges" : "inCreate",
+        "precision" : 30,
+        "hasDefaultValueExpression" : true,
+        "title" : "Lead Number",
+        "maxLength" : "30",
+        "properties" : {
+          "fnd:OSN_ENABLED_ATTR" : "true",
+          "ExtnEventActionProperty" : "UpdateInFieldUpdate",
+          "ExtnMassUpdateable" : "false",
+          "DISPLAYWIDTH" : "30",
+          "fnd:FND_AUDIT_ATTR_ENABLED" : "true",
+          "fnd:FND_AUDIT_USER_KEY" : "true"
+        },
+        "annotations" : {
+          "description" : "User friendly unique identifier for a lead."
+        }
+      }, {
+        "name" : "OwnerPartyName",
+        "type" : "string",
+        "updatable" : true,
+        "mandatory" : true,
+        "queryable" : true,
+        "allowChanges" : "never",
+        "precision" : 360,
+        "title" : "Owner",
+        "controlType" : "combo_lov",
+        "maxLength" : "360",
+        "properties" : {
+          "TOOLTIP" : "Owner",
+          "ExtnMassUpdateable" : "true",
+          "fnd:OSN_ENABLED_ATTR" : "true",
+          "ExtnEventActionProperty" : "HideInFieldUpdate",
+          "DISPLAYWIDTH" : "35",
+          "fnd:FND_AUDIT_ATTR_ENABLED" : "false"
+        },
+        "lov" : {
+          "childRef" : "ResourcePickerVA",
+          "attributeMap" : [ {
+            "source" : "ResourceName",
+            "target" : "OwnerPartyName"
+          }, {
+            "source" : "PartyId",
+            "target" : "OwnerId",
+            "derived" : true
+          } ],
+          "displayAttributes" : [ "ResourceName", "OrganizationName", "ReportsTo", "RoleName" ],
+          "lovResourcePath" : [ {
+            "resource" : "resourcePickers",
+            "filter" : "?finder=FilterByManagerReportsFlagRF"
+          } ]
+        },
+        "annotations" : {
+          "description" : "Name associated with the owner of this sales lead."
+        }
+      }, {
+        "name" : "StatusCode",
+        "type" : "string",
+        "updatable" : true,
+        "mandatory" : false,
+        "queryable" : true,
+        "allowChanges" : "always",
+        "precision" : 30,
+        "defaultValue" : "UNQUALIFIED",
+        "title" : "Status",
+        "controlType" : "choice",
+        "maxLength" : "30",
+        "properties" : {
+          "ExtnMassUpdateable" : "false",
+          "ExtnEventActionProperty" : "UpdateInFieldUpdate",
+          "DISPLAYWIDTH" : "35",
+          "fnd:FND_AUDIT_LOOKUP_TYPE" : "MKL_LEAD_STATUS",
+          "fnd:FND_AUDIT_ATTR_ENABLED" : "true"
+        },
+        "lov" : {
+          "childRef" : "StatusCodeVA",
+          "attributeMap" : [ {
+            "source" : "LookupCode",
+            "target" : "StatusCode"
+          } ],
+          "displayAttributes" : [ "Meaning" ],
+          "lovResourcePath" : [ {
+            "resource" : "mklLookups",
+            "filter" : "?finder=LookupTypeActiveEnabledOrBindCodeFinder%3BBindLookupType%3DMKL_LEAD_STATUS"
+          } ]
+        },
+        "annotations" : {
+          "description" : "Pre-defined code used to indicate the status of a lead."
+        }
+      }, {
+      } ]
+    }
+  }
+}
